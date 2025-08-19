@@ -28,24 +28,24 @@ jobs:
         run: deck gateway dump --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify > config/kong-backup.yaml
 
       - name: Lint OpenAPI Spec
-        run: inso lint spec config/items-oas.yaml --ci
+        run: inso lint spec config/oas-api-test.yaml --ci
 
       - name: Generate Kong Configuration
-        run: deck file openapi2kong --spec config/items-oas.yaml --output-file config/items-deck.yaml
+        run: deck file openapi2kong --spec config/oas-api-test.yaml --output-file config/api-test-deck.yaml
 
       - name: Patch Kong Configuration With Target Control Plane
-        run: deck file patch -s config/items-deck.yaml config/patch.yaml -o config/items-deck.yaml
+        run: deck file patch -s config/api-test-deck.yaml config/patch.yaml -o config/api-test-deck.yaml
 
       - name: Add Kong Plugins and Consumers
         run: |
           # Add plugins from file
-          deck file add-plugins -s config/items-deck.yaml config/add-plugins.yaml -o config/items-deck.yaml
+          deck file add-plugins -s config/api-test-deck.yaml config/add-plugins.yaml -o config/api-test-deck.yaml
           # Add consumers
-          deck file patch -s config/items-deck.yaml config/add-consumers.yaml -o config/items-deck.yaml
+          deck file patch -s config/api-test-deck.yaml config/add-consumers.yaml -o config/api-test-deck.yaml
 
       - name: Apply New Configuration
         run: |
-          deck gateway sync --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify config/items-deck.yaml
+          deck gateway sync --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify config/api-test-deck.yaml
 
       - name: Back out Changes on Failure
         if: failure()
