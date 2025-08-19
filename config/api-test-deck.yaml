@@ -1,0 +1,48 @@
+_format_version: "3.0"
+_konnect:
+  control_plane_name: serverless-default
+consumers:
+- keyauth_credentials:
+  - key: secret-key
+  username: demo-user
+services:
+- host: 15.206.165.16
+  id: a49d53c1-c2ce-5d7c-a72c-e2c376de9e93
+  name: simple-api
+  path: /
+  plugins: []
+  port: 8443
+  protocol: https
+  routes:
+  - id: 2ee8bc29-583f-5015-a6e8-20b392125492
+    methods:
+    - GET
+    name: simple-api_listtodos
+    paths:
+    - ~/inquiry$
+    plugins: []
+    regex_priority: 200
+    strip_path: false
+    tags: []
+  - id: 96a507bf-30dc-5282-a544-08c05ea2bc3b
+    methods:
+    - GET
+    name: simple-api_getitembyid
+    paths:
+    - ~/inquiry/(?<id>[^#?/]+)$
+    plugins: []
+    regex_priority: 100
+    strip_path: false
+    tags: []
+  - id: b3c5af12-128f-5ad9-b43d-7acd37aadb51
+    methods:
+    - POST
+    name: simple-api_order_post
+    paths:
+    - ~/order$
+    plugins: []
+    regex_priority: 200
+    strip_path: false
+    tags: []
+  tags: []
+upstreams: []

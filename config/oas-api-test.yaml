@@ -1,0 +1,178 @@
+openapi: 3.0.2
+info:
+  title: Simple API
+  version: 1.0.0
+  description: This is simple API for demo purposes.
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: https://15.206.165.16:8443
+    description: sandbox environment
+
+# Add a global security requirement here to apply basic auth to all paths
+#security:
+#  - basicAuth: []
+
+paths:
+  /inquiry:
+    get:
+      summary: List all data
+      description: Returns a list of all items.
+      operationId: listTodos
+      responses:
+        '200':
+          description: A JSON array of TODOs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InquiryResponse'
+
+  /inquiry/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: get data by id
+        schema:
+          type: string
+
+    get:
+      summary: Get an item by ID
+      description: Retrieves a specific item by its ID.
+      operationId: getItemById
+      responses:
+        '200':
+          description: The requested TODO item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InquiryResponse'
+        '404':
+          description: TODO item not found
+  
+  /order:   
+    post:
+      summary: submit order
+      description: example api for submit order
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCreationResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error          
+
+
+components:
+  # Add the securitySchemes object to define basicAuth
+#  securitySchemes:
+#    basicAuth: # This is the name you will use to reference this security scheme
+#      type: http
+#      scheme: basic
+  schemas:
+     Product:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the product.
+          example: "1"
+        name:
+          type: string
+          description: Name of the product.
+          example: "Product 1"
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+          example: 10.99
+  
+     InquiryResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: HTTP status code.
+          example: "200"
+        response:
+          type: string
+          description: General response status.
+          example: "success"
+        message:
+          type: string
+          description: A human-readable message about the response.
+          example: "Get Inquiry successful"
+        data:
+          type: array
+          description: A list of products.
+          items:
+            $ref: '#/components/schemas/Product'   
+     
+     ProductRequest:
+       type: object
+       properties:
+         id:
+           type: string
+           description: Unique identifier of the product
+           example: "1"
+         name:
+           type: string
+           description: Name of the product.
+           example: "Product"
+         quantity:
+           type: string
+           description: The quantity of the product.
+           example: "1"
+         
+     OrderCreatedData:
+       type: object
+       description: Details of the product/order created
+       properties:
+         id:
+           type: string
+           description: Unique identifier of the created item.
+           example: "1"
+         name:
+           type: string
+           description: Name of the item created.
+           example: "Product"
+         quantity:
+           type: string
+           description: The quantity of the item.
+           example: "1"
+
+     OrderCreationResponse:
+       type: object
+       description: Response schema for a successful order creation.
+       properties:
+         status:
+           type: string
+           description: HTTP status code.
+           example: "201"
+         response:
+           type: string
+           description: General response status.
+           example: "created"
+         message:
+           type: string
+           description: A human-readable message about the response.
+           example: "Order created"
+         data:
+           $ref: '#/components/schemas/OrderCreatedData'
+           

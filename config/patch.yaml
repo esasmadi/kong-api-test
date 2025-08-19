@@ -1,0 +1,29 @@
+patches:
+  # Target CP
+  - selectors:
+      - $
+    values:
+      _konnect:
+        control_plane_name: "serverless-default"
+
+  # Update target host and remove base path from service
+  - selectors:
+      - $.services[?(@.name=="demo-api")]
+    values:
+      host: 172.31.11.96
+    remove:
+      - path
+
+  # Patch GET /
+  - selectors:
+      - $.services[*].routes[?(@.name=="inquiry-svc")]
+    values:
+      paths:
+        - /inquiry
+
+  # Patch POST /
+  - selectors:
+      - $.services[*].routes[?(@.name=="order-svc")]
+    values:
+      paths:
+        - /order
