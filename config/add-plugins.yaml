@@ -1,7 +1,7 @@
 add-plugins:
   # Key-auth plugin for GET /inquiry (list all data)
   - selectors:
-      - $.services[*].routes[?(@.name=='getitem-rt')]
+      - $.services[*].routes[?(@.name=='demo-api_getitems')]
     plugins:
       - config:
           anonymous: null
@@ -29,7 +29,7 @@ add-plugins:
 
   # Rate limiting plugin for GET /inquiry/{id} (5 calls per minute)
   - selectors:
-      - $.services[*].routes[?(@.name=='getitembyid-rt')]
+      - $.services[*].routes[?(@.name=='demo-api_getitembyid')]
     plugins:
       - config:
           compound_identifier: null
@@ -89,7 +89,7 @@ add-plugins:
 
   # Rate limiting plugin for POST /order (5 calls per 10 seconds)
   - selectors:
-      - $.services[*].routes[?(@.name=='order-rt')]
+      - $.services[*].routes[?(@.name=='demo-api_order')]
     plugins:
       - config:
           compound_identifier: null
