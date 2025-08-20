@@ -3,46 +3,191 @@ _konnect:
   control_plane_name: serverless-default
 consumers:
 - keyauth_credentials:
-  - key: secret-key
-  username: demo-user
+  - id: 4c264e21-8e9b-4080-b745-625218446564
+    key: api-test-key-2024
+  tags:
+  - managed-by-deck-api-test
+  - generated-from-oas
+  username: demo-user-api-test
 services:
-- host: 15.206.165.16
+- host: 172.31.11.96
   id: a49d53c1-c2ce-5d7c-a72c-e2c376de9e93
-  name: simple-api
-  path: /
+  name: demo-api
   plugins: []
-  port: 8443
-  protocol: https
+  port: 3000
+  protocol: http
   routes:
   - id: 2ee8bc29-583f-5015-a6e8-20b392125492
     methods:
     - GET
-    name: simple-api_listtodos
+    name: getitem-rt
     paths:
     - ~/inquiry$
-    plugins: []
+    plugins:
+    - config:
+        anonymous: null
+        hide_credentials: false
+        identity_realms:
+        - id: null
+          region: null
+          scope: cp
+        key_in_body: false
+        key_in_header: true
+        key_in_query: true
+        key_names:
+        - apikey
+        realm: null
+        run_on_preflight: true
+      enabled: true
+      name: key-auth
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      - ws
+      - wss
     regex_priority: 200
     strip_path: false
-    tags: []
+    tags:
+    - managed-by-deck-api-test
+    - generated-from-oas
   - id: 96a507bf-30dc-5282-a544-08c05ea2bc3b
     methods:
     - GET
-    name: simple-api_getitembyid
+    name: getitembyid-rt
     paths:
     - ~/inquiry/(?<id>[^#?/]+)$
-    plugins: []
+    plugins:
+    - config:
+        compound_identifier: null
+        consumer_groups: null
+        dictionary_name: kong_rate_limiting_counters
+        disable_penalty: false
+        enforce_consumer_groups: false
+        error_code: 429
+        error_message: API rate limit exceeded - 5 calls per minute allowed
+        header_name: null
+        hide_client_headers: false
+        identifier: consumer
+        limit:
+        - 5
+        lock_dictionary_name: kong_locks
+        namespace: tePDGfhlwZBWgmoAUgIAi0pxxnAC0QYU
+        path: null
+        redis:
+          cluster_addresses: null
+          cluster_max_redirections: 5
+          cluster_nodes: null
+          connect_timeout: 2000
+          connection_is_proxied: false
+          database: 0
+          host: 127.0.0.1
+          keepalive_backlog: null
+          keepalive_pool_size: 256
+          password: null
+          port: 6379
+          read_timeout: 2000
+          redis_proxy_type: null
+          send_timeout: 2000
+          sentinel_addresses: null
+          sentinel_master: null
+          sentinel_nodes: null
+          sentinel_password: null
+          sentinel_role: null
+          sentinel_username: null
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        retry_after_jitter_max: 0
+        strategy: local
+        sync_rate: null
+        window_size:
+        - 60
+        window_type: sliding
+      enabled: true
+      name: rate-limiting-advanced
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
     regex_priority: 100
     strip_path: false
-    tags: []
+    tags:
+    - managed-by-deck-api-test
+    - generated-from-oas
   - id: b3c5af12-128f-5ad9-b43d-7acd37aadb51
     methods:
     - POST
-    name: simple-api_order_post
+    name: order-rt
     paths:
     - ~/order$
-    plugins: []
+    plugins:
+    - config:
+        compound_identifier: null
+        consumer_groups: null
+        dictionary_name: kong_rate_limiting_counters
+        disable_penalty: false
+        enforce_consumer_groups: false
+        error_code: 429
+        error_message: API rate limit exceeded - 5 calls per 10 seconds allowed
+        header_name: null
+        hide_client_headers: false
+        identifier: consumer
+        limit:
+        - 5
+        lock_dictionary_name: kong_locks
+        namespace: tePDGfhlwZBWgmoAUgIAi0pxxnAC0QYU
+        path: null
+        redis:
+          cluster_addresses: null
+          cluster_max_redirections: 5
+          cluster_nodes: null
+          connect_timeout: 2000
+          connection_is_proxied: false
+          database: 0
+          host: 127.0.0.1
+          keepalive_backlog: null
+          keepalive_pool_size: 256
+          password: null
+          port: 6379
+          read_timeout: 2000
+          redis_proxy_type: null
+          send_timeout: 2000
+          sentinel_addresses: null
+          sentinel_master: null
+          sentinel_nodes: null
+          sentinel_password: null
+          sentinel_role: null
+          sentinel_username: null
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        retry_after_jitter_max: 0
+        strategy: local
+        sync_rate: null
+        window_size:
+        - 10
+        window_type: sliding
+      enabled: true
+      name: rate-limiting-advanced
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
     regex_priority: 200
     strip_path: false
-    tags: []
-  tags: []
+    tags:
+    - managed-by-deck-api-test
+    - generated-from-oas
+  tags:
+  - managed-by-deck-api-test
+  - generated-from-oas
+  - team:api-test
 upstreams: []
