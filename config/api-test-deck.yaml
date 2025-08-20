@@ -1,6 +1,6 @@
 _format_version: "3.0"
 _konnect:
-  control_plane_name: serverless-default
+  control_plane_name: demo-dp
 consumers:
 - keyauth_credentials:
   - id: 4c264e21-8e9b-4080-b745-625218446564
@@ -23,7 +23,62 @@ services:
     name: demo-api_getitems
     paths:
     - ~/inquiry$
-    plugins: []
+    plugins:
+    - config:
+        compound_identifier: null
+        consumer_groups: null
+        dictionary_name: kong_rate_limiting_counters
+        disable_penalty: false
+        enforce_consumer_groups: false
+        error_code: 429
+        error_message: API rate limit exceeded - 5 calls per minute allowed
+        header_name: null
+        hide_client_headers: false
+        identifier: consumer
+        limit:
+        - 5
+        lock_dictionary_name: kong_locks
+        namespace: tePDGfhlwZBWgmoAUgIAi0pxxnAC0QYU
+        path: null
+        redis:
+          cluster_addresses: null
+          cluster_max_redirections: 5
+          cluster_nodes: null
+          connect_timeout: 2000
+          connection_is_proxied: false
+          database: 0
+          host: 127.0.0.1
+          keepalive_backlog: null
+          keepalive_pool_size: 256
+          password: null
+          port: 6379
+          read_timeout: 2000
+          redis_proxy_type: null
+          send_timeout: 2000
+          sentinel_addresses: null
+          sentinel_master: null
+          sentinel_nodes: null
+          sentinel_password: null
+          sentinel_role: null
+          sentinel_username: null
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        retry_after_jitter_max: 0
+        strategy: local
+        sync_rate: null
+        window_size:
+        - 60
+        window_type: sliding
+      enabled: true
+      name: rate-limiting-advanced
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
     regex_priority: 200
     strip_path: false
     tags:
@@ -35,7 +90,62 @@ services:
     name: demo-api_getitembyid
     paths:
     - ~/inquiry/(?<id>[^#?/]+)$
-    plugins: []
+    plugins:
+    - config:
+        compound_identifier: null
+        consumer_groups: null
+        dictionary_name: kong_rate_limiting_counters
+        disable_penalty: false
+        enforce_consumer_groups: false
+        error_code: 429
+        error_message: API rate limit exceeded - 5 calls per minute allowed
+        header_name: null
+        hide_client_headers: false
+        identifier: consumer
+        limit:
+        - 5
+        lock_dictionary_name: kong_locks
+        namespace: tePDGfhlwZBWgmoAUgIAi0pxxnAC0QYU
+        path: null
+        redis:
+          cluster_addresses: null
+          cluster_max_redirections: 5
+          cluster_nodes: null
+          connect_timeout: 2000
+          connection_is_proxied: false
+          database: 0
+          host: 127.0.0.1
+          keepalive_backlog: null
+          keepalive_pool_size: 256
+          password: null
+          port: 6379
+          read_timeout: 2000
+          redis_proxy_type: null
+          send_timeout: 2000
+          sentinel_addresses: null
+          sentinel_master: null
+          sentinel_nodes: null
+          sentinel_password: null
+          sentinel_role: null
+          sentinel_username: null
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        retry_after_jitter_max: 0
+        strategy: local
+        sync_rate: null
+        window_size:
+        - 60
+        window_type: sliding
+      enabled: true
+      name: rate-limiting-advanced
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
     regex_priority: 100
     strip_path: false
     tags:
@@ -47,7 +157,62 @@ services:
     name: demo-api_order
     paths:
     - ~/order$
-    plugins: []
+    plugins:
+    - config:
+        compound_identifier: null
+        consumer_groups: null
+        dictionary_name: kong_rate_limiting_counters
+        disable_penalty: false
+        enforce_consumer_groups: false
+        error_code: 429
+        error_message: API rate limit exceeded - 5 calls per 10 seconds allowed
+        header_name: null
+        hide_client_headers: false
+        identifier: consumer
+        limit:
+        - 5
+        lock_dictionary_name: kong_locks
+        namespace: tePDGfhlwZBWgmoAUgIAi0pxxnAC0QYU
+        path: null
+        redis:
+          cluster_addresses: null
+          cluster_max_redirections: 5
+          cluster_nodes: null
+          connect_timeout: 2000
+          connection_is_proxied: false
+          database: 0
+          host: 127.0.0.1
+          keepalive_backlog: null
+          keepalive_pool_size: 256
+          password: null
+          port: 6379
+          read_timeout: 2000
+          redis_proxy_type: null
+          send_timeout: 2000
+          sentinel_addresses: null
+          sentinel_master: null
+          sentinel_nodes: null
+          sentinel_password: null
+          sentinel_role: null
+          sentinel_username: null
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        retry_after_jitter_max: 0
+        strategy: local
+        sync_rate: null
+        window_size:
+        - 10
+        window_type: sliding
+      enabled: true
+      name: rate-limiting-advanced
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
     regex_priority: 200
     strip_path: false
     tags:

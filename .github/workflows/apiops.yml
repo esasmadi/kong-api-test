@@ -25,7 +25,7 @@ jobs:
           cp /tmp/inso /usr/local/bin/
 
       - name: Backup Existing Configuration
-        run: deck gateway dump --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify > config/kong-backup.yaml
+        run: deck gateway dump --konnect-control-plane-name="demo-dp" --konnect-token="kpat_OKiG5apCXnuK7bYDG3vnJcXZG0fwGtXLBfM1nHfK7AswulQDO" --tls-skip-verify > config/kong-backup.yaml
 
       - name: Lint OpenAPI Spec
         run: inso lint spec config/oas-api-test.yaml --ci
@@ -53,15 +53,15 @@ jobs:
       - name: Show Configuration Diff
         run: |
           echo "=== Configuration Changes Preview ==="
-          deck gateway diff --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify --select-tag managed-by-deck-api-test config/api-test-deck.yaml || true
+          deck gateway diff --konnect-control-plane-name="demo-dp" --konnect-token="kpat_OKiG5apCXnuK7bYDG3vnJcXZG0fwGtXLBfM1nHfK7AswulQDO" --tls-skip-verify --select-tag managed-by-deck-api-test config/api-test-deck.yaml || true
 
       - name: Apply New Configuration
         run: |
           # Use selective sync to only manage tagged resources
-          deck gateway sync --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify --select-tag managed-by-deck-api-test config/api-test-deck.yaml
+          deck gateway sync --konnect-control-plane-name="demo-dp" --konnect-token="kpat_OKiG5apCXnuK7bYDG3vnJcXZG0fwGtXLBfM1nHfK7AswulQDO" --tls-skip-verify --select-tag managed-by-deck-api-test config/api-test-deck.yaml
 
       - name: Back out Changes on Failure
         if: failure()
         run: |
           echo "Something went wrong. Rolling back changes."
-          deck gateway sync --konnect-token kpat_QjviY1aJEiJTR5Wg6egnKJOsFpD5jlXq10L4BzowGHWwlEjvR --konnect-control-plane-name "serverless-default" --tls-skip-verify config/kong-backup.yaml
+          deck gateway sync --konnect-control-plane-name="demo-dp" --konnect-token="kpat_OKiG5apCXnuK7bYDG3vnJcXZG0fwGtXLBfM1nHfK7AswulQDO" --tls-skip-verify config/kong-backup.yaml

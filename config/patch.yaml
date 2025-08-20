@@ -4,7 +4,7 @@ patches:
       - $
     values:
       _konnect:
-        control_plane_name: "serverless-default"
+        control_plane_name: "demo-dp"
 
   # Add tags to all services
   - selectors:
