@@ -1,4 +1,4 @@
-# add-plugins:
+add-plugins:
 #   # Key-auth plugin for GET /inquiry (list all data)
 #   - selectors:
 #       - $.services[*].routes[?(@.name=='demo-api_getitems')]
